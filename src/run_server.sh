@@ -1,0 +1,1 @@
+/Users/Docstring/Documents/TableauDeBordDevise/venv/bin/python /Users/Docstring/Documents/TableauDeBordDevise/src/manage.py runserver

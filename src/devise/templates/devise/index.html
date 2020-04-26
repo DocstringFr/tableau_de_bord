@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline@0.1.3/src/chartjs-plugin-trendline.min.js"></script>
+
+</head>
+<body class="bg-dark">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-white">Tableau de bord - {{ page_label }}</h1>
+                <a href="{% url 'home' days_range=7 currencies=currencies %}" class="btn {% if page_label == 'Semaine' %}btn-info{% else %}btn-secondary{% endif %}">Semaine</a>
+                <a href="{% url 'home' days_range=30 currencies=currencies %}" class="btn {% if page_label == 'Mois' %}btn-info{% else %}btn-secondary{% endif %}">Mois</a>
+                <a href="{% url 'home' days_range=365 currencies=currencies %}" class="btn {% if page_label == 'Année' %}btn-info{% else %}btn-secondary{% endif %}">Année</a>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+            {% for currency, rates in data.items %}
+            <div class="col-md-10 col-lg-6">
+                <canvas id="chart-{{ currency }}"></canvas>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        {% for currency, rates in data.items %}
+            var ctx = document.getElementById("chart-{{ currency }}");
+            new Chart(ctx, {
+                    type: 'line',
+                    data: {labels: {{ days_labels|safe }},
+                           datasets: [{
+                                label: "{{ currency }}",
+                                data: {{ rates|safe }},
+                                fill: false,
+                                borderColor: 'rgb(255, 128, 128)',
+                                trendlineLinear: {
+                                    style: "#9fd6f4",
+                                    width: 3
+                                }
+                           }]
+                    }
+            });
+        {% endfor %}
+
+    </script>
+
+</body>
+</html>
