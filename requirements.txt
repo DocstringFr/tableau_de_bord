@@ -1,0 +1,11 @@
+asgiref==3.2.7
+certifi==2020.4.5.1
+chardet==3.0.4
+Django==3.0.5
+idna==2.9
+PySide2==5.14.2
+pytz==2019.3
+requests==2.23.0
+shiboken2==5.14.2
+sqlparse==0.3.1
+urllib3==1.25.9
