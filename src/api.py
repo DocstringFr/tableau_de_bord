@@ -9,7 +9,11 @@ def get_rates(currencies, days=30):
     start_date = end_date - timedelta(days=days)
 
     symbols = ','.join(currencies)
-    requete = f"https://api.exchangeratesapi.io/history?start_at={start_date}&end_at={end_date}&symbols={symbols}"
+    
+    # requete = f"https://api.exchangeratesapi.io/history?start_at={start_date}&end_at={end_date}&symbols={symbols}"
+    # L'API de exchangeratesapi.io n'étant plus disponible, j'utilise à la place exchangerate.host
+    requete = f"https://api.exchangerate.host/timeseries?start_date={start_date}&end_date={end_date}&symbols={symbols}"
+
     r = requests.get(requete)
     if not r and not r.json():
         return False, False
